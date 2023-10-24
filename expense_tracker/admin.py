@@ -37,7 +37,12 @@ class EmployeeAdmin(admin.ModelAdmin):
     ordering = ["name"]
 
 
+class UnitAdmin(admin.ModelAdmin):
+    list_display = ["full_name", "short_name"]
+    ordering = ["full_name"]
+
+
 admin.site.register(ExpenseDocument, ExpenseDocumentAdmin)
 admin.site.register(WorkOrder, WorkOrderAdmin)
-admin.site.register(Unit)
+admin.site.register(Unit, UnitAdmin)
 admin.site.register(Employee, EmployeeAdmin)
