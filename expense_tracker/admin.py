@@ -17,7 +17,8 @@ class WorkOrderAdmin(admin.ModelAdmin):
 class ExpenseDocumentAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-        form.base_fields['work_days'].queryset = WorkDay.objects.filter(work_order_id=obj.work_order_id)
+        if obj is not None:
+            form.base_fields['work_days'].queryset = WorkDay.objects.filter(work_order_id=obj.work_order_id)
         return form
 
 admin.site.register(ExpenseDocument, ExpenseDocumentAdmin)
