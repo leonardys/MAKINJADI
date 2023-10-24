@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.http.request import HttpRequest
 
 from .models import WorkOrder, WorkDay, ExpenseDocument, Unit, Employee
 
@@ -20,6 +21,9 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         if obj is not None:
             form.base_fields['work_days'].queryset = WorkDay.objects.filter(work_order_id=obj.work_order_id)
         return form
+    
+    def has_add_permission(self, request):
+        return False
 
 admin.site.register(ExpenseDocument, ExpenseDocumentAdmin)
 admin.site.register(WorkOrder, WorkOrderAdmin)
