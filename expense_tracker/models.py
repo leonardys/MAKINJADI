@@ -1,11 +1,13 @@
 from django.db import models
 
+
 class Unit(models.Model):
     full_name = models.CharField(max_length=100)
     short_name = models.CharField(max_length=30)
 
     def __str__(self):
         return self.short_name
+
 
 class Employee(models.Model):
     eid = models.CharField(max_length=18)
@@ -15,6 +17,7 @@ class Employee(models.Model):
     def __str__(self):
         return self.name
 
+
 class WorkOrder(models.Model):
     number = models.CharField(max_length=30)
     date = models.DateField()
@@ -22,7 +25,8 @@ class WorkOrder(models.Model):
 
     def __str__(self):
         return self.number
-    
+
+
 class WorkDay(models.Model):
     work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE)
     date = models.DateField()
@@ -33,6 +37,7 @@ class WorkDay(models.Model):
     def __str__(self):
         return "{date} ({number})".format(date=self.date, number=self.work_order.number)
 
+
 class ExpenseDocument(models.Model):
     work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -41,4 +46,6 @@ class ExpenseDocument(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return "{number}: {employee_name}".format(number=self.number, employee_name=self.employee.name)
+        return "{number}: {employee_name}".format(
+            number=self.number, employee_name=self.employee.name
+        )
