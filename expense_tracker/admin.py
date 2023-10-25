@@ -56,6 +56,7 @@ class UnitAdmin(admin.ModelAdmin):
 
 admin.site.site_header = "MAKINJADI"
 admin.site.site_title = "Manajemen Keuangan dan Informasi Perjalanan Dinas (MAKINJADI)"
+
 admin.site.register(ExpenseDocument, ExpenseDocumentAdmin)
 admin.site.register(WorkOrder, WorkOrderAdmin)
 admin.site.register(Unit, UnitAdmin)

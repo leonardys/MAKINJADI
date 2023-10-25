@@ -8,6 +8,9 @@ class Unit(models.Model):
     def __str__(self):
         return self.short_name
 
+    class Meta:
+        verbose_name_plural = verbose_name = "Unit Organisasi"
+
 
 class Employee(models.Model):
     eid = models.CharField(max_length=18)
@@ -16,6 +19,9 @@ class Employee(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Pegawai"
 
 
 class WorkOrder(models.Model):
@@ -31,6 +37,9 @@ class WorkOrder(models.Model):
 
     def num_of_employees(self):
         return self.expensedocument_set.count()
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Surat Tugas (ST)"
 
 
 class WorkDay(models.Model):
@@ -60,3 +69,6 @@ class ExpenseDocument(models.Model):
 
     def num_of_days(self):
         return self.work_days.count()
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
