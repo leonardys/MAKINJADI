@@ -22,6 +22,9 @@ class WorkOrderAdmin(admin.ModelAdmin):
 
 
 class ExpenseDocumentAdmin(admin.ModelAdmin):
+    list_display = ["number", "date", "employee", "num_of_days"]
+    ordering = ["-date"]
+
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
         if obj is not None:
