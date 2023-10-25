@@ -20,6 +20,9 @@ class WorkOrderAdmin(admin.ModelAdmin):
     ordering = ["number"]
     inlines = [WorkDayInline, ExpenseDocumentInline]
 
+    class Media:
+        css = {"all": ["expense_tracker/hide.css"]}
+
 
 class ExpenseDocumentAdmin(admin.ModelAdmin):
     fields = ("work_order", "number", "date", "employee", "work_days")

@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Unit(models.Model):
-    full_name = models.CharField(max_length=100)
-    short_name = models.CharField(max_length=30)
+    full_name = models.CharField(max_length=100, verbose_name="Nama Lengkap")
+    short_name = models.CharField(max_length=30, verbose_name="Nama Pendek")
 
     def __str__(self):
         return self.short_name
@@ -13,9 +13,11 @@ class Unit(models.Model):
 
 
 class Employee(models.Model):
-    eid = models.CharField(max_length=18)
-    name = models.CharField(max_length=100)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    eid = models.CharField(max_length=18, verbose_name="NIP")
+    name = models.CharField(max_length=100, verbose_name="Nama Pegawai")
+    unit = models.ForeignKey(
+        Unit, on_delete=models.CASCADE, verbose_name="Unit Organisasi"
+    )
 
     def __str__(self):
         return self.name
@@ -25,9 +27,9 @@ class Employee(models.Model):
 
 
 class WorkOrder(models.Model):
-    number = models.CharField(max_length=30)
-    date = models.DateField()
-    desc = models.TextField()
+    number = models.CharField(max_length=30, verbose_name="Nomor ST")
+    date = models.DateField(verbose_name="Tanggal ST")
+    desc = models.TextField(verbose_name="Deskripsi Penugasan")
 
     def __str__(self):
         return self.number
@@ -56,13 +58,20 @@ class WorkDay(models.Model):
             end_time=self.end_time.strftime("%H:%M"),
         )
 
+    class Meta:
+        verbose_name_plural = verbose_name = "Waktu Pelaksanaan Tugas"
+
 
 class ExpenseDocument(models.Model):
-    work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    work_days = models.ManyToManyField(WorkDay)
-    number = models.CharField(max_length=30)
-    date = models.DateField()
+    work_order = models.ForeignKey(
+        WorkOrder, on_delete=models.CASCADE, verbose_name="Nomor ST"
+    )
+    employee = models.ForeignKey(
+        Employee, on_delete=models.CASCADE, verbose_name="Nama Pegawai"
+    )
+    work_days = models.ManyToManyField(WorkDay, verbose_name="Waktu Pelaksanaan Tugas")
+    number = models.CharField(max_length=30, verbose_name="Nomor SPD")
+    date = models.DateField(verbose_name="Tanggal SPD")
 
     def __str__(self):
         return self.number
