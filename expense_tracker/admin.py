@@ -22,6 +22,7 @@ class WorkOrderAdmin(admin.ModelAdmin):
 
 
 class ExpenseDocumentAdmin(admin.ModelAdmin):
+    fields = ("work_order", "number", "date", "employee", "work_days")
     list_display = ["number", "date", "employee", "num_of_days"]
     ordering = ["-date"]
 
@@ -33,14 +34,14 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
             )
         return form
 
-    def has_add_permission(self, request):
-        return False
-
     def get_readonly_fields(self, request, obj):
         readonly_fields = super().get_readonly_fields(request, obj)
         if obj:
             readonly_fields = (*readonly_fields, "work_order")
         return readonly_fields
+
+    def has_add_permission(self, request):
+        return False
 
 
 class EmployeeAdmin(admin.ModelAdmin):

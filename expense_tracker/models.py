@@ -41,7 +41,11 @@ class WorkDay(models.Model):
     location = models.CharField(max_length=50)
 
     def __str__(self):
-        return "{date} ({number})".format(date=self.date, number=self.work_order.number)
+        return "{date} ({start_time}-{end_time})".format(
+            date=self.date,
+            start_time=self.start_time.strftime("%H:%M"),
+            end_time=self.end_time.strftime("%H:%M"),
+        )
 
 
 class ExpenseDocument(models.Model):
