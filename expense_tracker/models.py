@@ -38,7 +38,7 @@ class WorkDay(models.Model):
     date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    place = models.CharField(max_length=50)
+    location = models.CharField(max_length=50)
 
     def __str__(self):
         return "{date} ({number})".format(date=self.date, number=self.work_order.number)
