@@ -52,9 +52,7 @@ class ExpenseDocument(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return "{number}: {employee_name}".format(
-            number=self.number, employee_name=self.employee.name
-        )
+        return self.number
 
     def num_of_days(self):
         return self.work_days.count()

@@ -27,7 +27,7 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-        if obj is not None:
+        if obj:
             form.base_fields["work_days"].queryset = WorkDay.objects.filter(
                 work_order_id=obj.work_order_id
             )
@@ -35,6 +35,12 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    def get_readonly_fields(self, request, obj):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        if obj:
+            readonly_fields = (*readonly_fields, "work_order")
+        return readonly_fields
 
 
 class EmployeeAdmin(admin.ModelAdmin):
