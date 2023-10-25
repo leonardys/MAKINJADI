@@ -26,6 +26,12 @@ class WorkOrder(models.Model):
     def __str__(self):
         return self.number
 
+    def num_of_days(self):
+        return self.workday_set.count()
+
+    def num_of_employees(self):
+        return self.expensedocument_set.count()
+
 
 class WorkDay(models.Model):
     work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE)

@@ -16,6 +16,8 @@ class ExpenseDocumentInline(admin.TabularInline):
 
 
 class WorkOrderAdmin(admin.ModelAdmin):
+    list_display = ["number", "date", "num_of_employees", "num_of_days"]
+    ordering = ["number"]
     inlines = [WorkDayInline, ExpenseDocumentInline]
 
 
