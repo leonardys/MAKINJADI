@@ -43,6 +43,9 @@ class WorkOrder(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = "Surat Tugas (ST)"
 
+    num_of_days.short_description = "Jumlah Hari"
+    num_of_employees.short_description = "Jumlah Pegawai"
+
 
 class WorkDay(models.Model):
     work_order = models.ForeignKey(WorkOrder, on_delete=models.CASCADE)
@@ -81,3 +84,5 @@ class ExpenseDocument(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
+
+    num_of_days.short_description = "Jumlah Hari"
