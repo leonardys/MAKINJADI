@@ -1,12 +1,15 @@
 from django.contrib import admin
-from django.http.request import HttpRequest
-
+from django.db import models
+from django import forms
 from .models import WorkOrder, WorkDay, ExpenseDocument, Unit, Employee
 
 
 class WorkDayInline(admin.TabularInline):
     model = WorkDay
     extra = 1
+    formfield_overrides = {
+        models.TimeField: {"widget": forms.TimeInput(format="%H:%M")},
+    }
 
 
 class ExpenseDocumentInline(admin.TabularInline):
