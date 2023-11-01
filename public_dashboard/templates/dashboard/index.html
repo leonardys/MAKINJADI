@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    {% if expense_documents %}
+    <ul>
+        {% for doc in expense_documents %}
+        <li>{{ doc.number }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No expense documents are available.</p>
+    {% endif %}
+</body>
+
+</html>
