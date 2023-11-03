@@ -1,8 +1,12 @@
 from django.shortcuts import render
+from django.views import generic
 from expense_tracker.models import ExpenseDocument
 
 
-def index(request):
-    expense_documents = ExpenseDocument.objects.order_by("date")
-    context = {"expense_documents": expense_documents}
-    return render(request, "dashboard/index.html", context)
+class IndexView(generic.ListView):
+    model = ExpenseDocument
+    template_name = "dashboard/index.html"
+    context_object_name = "expense_documents"
+
+    def get_queryset(self):
+        return ExpenseDocument.objects.order_by("date")
