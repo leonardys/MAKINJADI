@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html>
+<html data-theme="cupcake">
 
 <head>
     <meta charset="UTF-8">
@@ -8,16 +8,48 @@
     <link href="{% static 'dist/output.css' %}" rel="stylesheet">
 </head>
 
-<body>
-    {% if expense_documents %}
-    <ul>
-        {% for doc in expense_documents %}
-        <li>{{ doc.number }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No expense documents are available.</p>
-    {% endif %}
+<body class="space-y-4">
+    <header class="navbar bg-neutral text-neutral-content">
+        <nav class="container flex items-center mx-auto gap-4">
+            <h1 class="btn normal-case text-xl">MAKINJADI</h1>
+            <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
+        </nav>
+    </header>
+
+    <div class="overflow-x-auto container mx-auto">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nomor SPD</th>
+                    <th>Nomor ST</th>
+                    <th>Pelaksana Tugas</th>
+                    <th>Jumlah Hari</th>
+                    <th>Status</th>
+                    <th>Tanggal Update</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if expense_documents %}
+                {% for doc in expense_documents %}
+                <tr class="hover">
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ doc.number }}</td>
+                    <td>{{ doc.work_order.number }}</td>
+                    <td>{{ doc.employee.name }}</td>
+                    <td>{{ doc.work_days.count }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                    <td colspan="7">Tidak ada SPD yang pending</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>
