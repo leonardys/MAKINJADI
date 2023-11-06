@@ -56,7 +56,14 @@ class WorkOrderAdmin(admin.ModelAdmin):
 
 class ExpenseDocumentAdmin(admin.ModelAdmin):
     fields = ("work_order", "number", "date", "employee", "work_days")
-    list_display = ["number", "date", "employee", "num_of_days"]
+    list_display = [
+        "number",
+        "date",
+        "employee",
+        "num_of_days",
+        "last_status",
+        "last_update",
+    ]
     ordering = ["-date"]
     inlines = [ExpenseDocumentLogInline]
 

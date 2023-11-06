@@ -83,10 +83,21 @@ class ExpenseDocument(models.Model):
     def num_of_days(self):
         return self.work_days.count()
 
+    def last_status(self):
+        if self.logs.count():
+            return self.logs.all().order_by("-created_at")[0].get_status()
+        return "Menunggu Berkas"
+
+    def last_update(self):
+        if self.logs.count():
+            return self.logs.all().order_by("-created_at")[0].created_at
+
     class Meta:
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
 
     num_of_days.short_description = "Jumlah Hari"
+    last_status.short_description = "Status Terakhir"
+    last_update.short_description = "Tanggal Update Status"
 
 
 class ExpenseDocumentLog(models.Model):
@@ -111,6 +122,9 @@ class ExpenseDocumentLog(models.Model):
     note = models.TextField(blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def get_status(self):
+        return self.Status(self.status).label
 
     class Meta:
         verbose_name_plural = verbose_name = "Status SPD"
