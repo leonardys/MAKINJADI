@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Unit(models.Model):
@@ -86,3 +87,30 @@ class ExpenseDocument(models.Model):
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
 
     num_of_days.short_description = "Jumlah Hari"
+
+
+class ExpenseDocumentLog(models.Model):
+    class Status(models.TextChoices):
+        ACCEPTED = "ACC", "Berkas Diterima"
+        NOT_COMPLETE = "NC", "Berkas Tidak Lengkap"
+        COMPLETE = "CMPLT", "Berkas Lengkap"
+        IN_CALCULATION = "CALC", "Proses Penghitungan Biaya Perjalanan Dinas"
+        READY_TO_BE_PAID = "READY", "Penghitungan Biaya Perjalanan Dinas Selesai"
+        DONE = "DONE", "Biaya Perjalanan Dinas Dibayarkan"
+
+    expense_document = models.ForeignKey(
+        ExpenseDocument,
+        on_delete=models.CASCADE,
+        verbose_name="Surat Perjalanan Dinas (SPD)",
+        related_name="logs",
+    )
+    status = models.CharField(
+        max_length=5,
+        choices=Status.choices,
+    )
+    note = models.TextField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Status SPD"
