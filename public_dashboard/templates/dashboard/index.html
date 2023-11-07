@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html data-theme="cupcake">
+<html data-theme="bumblebee">
 
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,7 @@
 <body class="space-y-4">
     <header class="navbar bg-neutral text-neutral-content">
         <nav class="container flex items-center mx-auto gap-4">
-            <h1 class="btn normal-case text-xl">MAKINJADI</h1>
+            <h1 class="btn btn-ghost no-animation text-xl">MAKINJADI</h1>
             <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
         </nav>
     </header>
@@ -24,9 +24,10 @@
                     <th>Nomor SPD</th>
                     <th>Nomor ST</th>
                     <th>Pelaksana Tugas</th>
-                    <th>Jumlah Hari</th>
+                    <th>Waktu Pelaksanaan</th>
                     <th>Status</th>
                     <th>Tanggal Update</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,9 +38,10 @@
                     <td>{{ doc.number }}</td>
                     <td>{{ doc.work_order.number }}</td>
                     <td>{{ doc.employee.name }}</td>
-                    <td>{{ doc.work_days.count }}</td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ doc.range_of_work_days }}</td>
+                    <td>{{ doc.last_status }}</td>
+                    <td>{{ doc.last_update }}</td>
+                    <td><a href="#" class="btn btn-xs btn-primary">Detil</a></td>
                 </tr>
                 {% endfor %}
                 {% else %}

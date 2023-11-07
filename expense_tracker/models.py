@@ -80,24 +80,35 @@ class ExpenseDocument(models.Model):
     def __str__(self):
         return self.number
 
-    def num_of_days(self):
-        return self.work_days.count()
+    def range_of_work_days(self):
+        if self.work_days.count() > 1:
+            return "{} s.d. {}".format(
+                self.work_days.order_by("date")[0].date.strftime("%Y-%m-%d"),
+                self.work_days.order_by("-date")[0].date.strftime("%Y-%m-%d"),
+            )
+        elif self.work_days.count() == 1:
+            return "{}".format(self.work_days.order_by("date")[0].date)
+        else:
+            return "Waktu Pelaksanaan Belum Diatur"
 
     def last_status(self):
         if self.logs.count():
-            return self.logs.all().order_by("-created_at")[0].get_status()
+            return self.logs.order_by("-created_at")[0].get_status()
         return "Menunggu Berkas"
 
     def last_update(self):
         if self.logs.count():
-            return self.logs.all().order_by("-created_at")[0].created_at
+            return self.logs.order_by("-created_at")[0].created_at.strftime(
+                "%Y-%m-%d %H:%S"
+            )
+        return ""
 
     class Meta:
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
 
-    num_of_days.short_description = "Jumlah Hari"
+    range_of_work_days.short_description = "Waktu Pelaksanaan"
     last_status.short_description = "Status Terakhir"
-    last_update.short_description = "Tanggal Update Status"
+    last_update.short_description = "Tanggal Update"
 
 
 class ExpenseDocumentLog(models.Model):

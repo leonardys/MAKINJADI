@@ -60,7 +60,7 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         "number",
         "date",
         "employee",
-        "num_of_days",
+        "range_of_work_days",
         "last_status",
         "last_update",
     ]
