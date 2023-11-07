@@ -130,7 +130,7 @@ class ExpenseDocumentLog(models.Model):
         max_length=5,
         choices=Status.choices,
     )
-    note = models.TextField(blank=True)
+    note = models.TextField(blank=True, verbose_name="Catatan")
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
