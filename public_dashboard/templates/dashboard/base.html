@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+<html data-theme="bumblebee">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'dist/output.css' %}" rel="stylesheet">
+    <title>{% block title %}MAKINJADI{% endblock %}</title>
+</head>
+
+<body class="space-y-4">
+    <header class="navbar bg-neutral text-neutral-content">
+        <nav class="container flex items-center mx-auto gap-4">
+            <h1 class="btn no-animation text-xl"><a href="{% url 'index' %}">MAKINJADI</a></h1>
+            <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

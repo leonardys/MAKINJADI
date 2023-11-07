@@ -1,0 +1,40 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}
+{{ expense_document.number }} | MAKINJADI
+{% endblock %}
+
+{% block content %}
+<div class="overflow-x-auto container mx-auto space-y-4">
+    <h1 class="text-3xl font-bold">{{ expense_document.number }}</h1>
+    <dl>
+        <dd class="text-xl font-semibold">Nomor ST</dd>
+        <dt class="mb-4">{{ expense_document.work_order.number }} tanggal {{ expense_document.work_order.date }}
+        </dt>
+        <dd class="text-xl font-semibold">Pelaksana Tugas</dd>
+        <dt class="mb-4">{{ expense_document.employee.name }}</dt>
+        <dd class="text-xl font-semibold">Waktu Pelaksanaan</dd>
+        <dt>
+            <ul>
+                {% for day in expense_document.work_days.all %}
+                <li>{{ day.date }} ({{ day.start_time }} - {{ day.end_time }})</li>
+                {% endfor %}
+            </ul>
+        </dt>
+    </dl>
+</div>
+<div class="divider"></div>
+<div class="overflow-x-auto container mx-auto">
+    {% for log in expense_document.logs.all %}
+    <div class="alert mb-4">
+        <div>
+            <h3 class="font-bold">{{ log.get_status }}</h3>
+            <div class="text-xs">{{ log.created_at }}</div>
+            {% if log.note %}
+            <p class="mt-4">{{ log.note }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
