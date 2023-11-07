@@ -11,9 +11,12 @@
 
 <body class="space-y-4">
     <header class="navbar bg-neutral text-neutral-content">
-        <nav class="container flex items-center mx-auto gap-4">
-            <h1 class="btn no-animation text-xl"><a href="{% url 'index' %}">MAKINJADI</a></h1>
-            <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
+        <nav class="container flex items-center mx-auto justify-between">
+            <div class="flex items-center gap-4">
+                <h1 class="btn no-animation text-xl"><a href="{% url 'index' %}">MAKINJADI</a></h1>
+                <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
+            </div>
+            <a href="{% url 'admin:index' %}" class="btn btn-primary">Admin</a>
         </nav>
     </header>
 
