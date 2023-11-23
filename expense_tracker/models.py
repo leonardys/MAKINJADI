@@ -113,12 +113,16 @@ class ExpenseDocument(models.Model):
 
 class ExpenseDocumentLog(models.Model):
     class Status(models.TextChoices):
-        ACCEPTED = "ACC", "Berkas Diterima"
-        NOT_COMPLETE = "NC", "Berkas Tidak Lengkap"
-        COMPLETE = "CMPLT", "Berkas Lengkap"
-        IN_CALCULATION = "CALC", "Proses Penghitungan Biaya Perjalanan Dinas"
-        READY_TO_BE_PAID = "READY", "Penghitungan Biaya Perjalanan Dinas Selesai"
-        DONE = "DONE", "Biaya Perjalanan Dinas Dibayarkan"
+        SUBMITTED = ("SUBMITTED", "Berkas Diterima")
+        NOT_COMPLETE = ("NOT_COMPLETE", "Berkas Tidak Lengkap")
+        IN_CALCULATION = ("IN_CALCULATION", "Berkas Lengkap, Proses Penghitungan")
+        CALCULATION_COMPLETED = (
+            "CALCULATION_COMPLETED",
+            "Penghitungan Selesai, Berkas Diserahkan ke Bendahara",
+        )
+        FINAL_VERIFICATION = ("FINAL_VERIFICATION", "Proses Verifikasi")
+        READY_FOR_PAYMENT = ("READY_FOR_PAYMENT", "Siap Dibayarkan")
+        DONE = ("DONE", "Selesai Dibayarkan")
 
     expense_document = models.ForeignKey(
         ExpenseDocument,
@@ -127,7 +131,7 @@ class ExpenseDocumentLog(models.Model):
         related_name="logs",
     )
     status = models.CharField(
-        max_length=5,
+        max_length=30,
         choices=Status.choices,
     )
     note = models.TextField(blank=True, verbose_name="Catatan")
