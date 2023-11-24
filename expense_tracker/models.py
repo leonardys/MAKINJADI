@@ -127,7 +127,6 @@ class ExpenseDocumentLog(models.Model):
     expense_document = models.ForeignKey(
         ExpenseDocument,
         on_delete=models.CASCADE,
-        verbose_name="Surat Perjalanan Dinas (SPD)",
         related_name="logs",
     )
     status = models.CharField(
@@ -143,3 +142,29 @@ class ExpenseDocumentLog(models.Model):
 
     class Meta:
         verbose_name_plural = verbose_name = "Status SPD"
+
+
+class ExpenseType(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Jenis Biaya Perjalanan Dinas")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Jenis Biaya Perjalanan Dinas"
+
+
+class Expense(models.Model):
+    expense_document = models.ForeignKey(ExpenseDocument, on_delete=models.CASCADE)
+    type = models.ForeignKey(
+        ExpenseType,
+        on_delete=models.CASCADE,
+        verbose_name="Jenis Biaya Perjalanan Dinas",
+    )
+    amount = models.PositiveIntegerField(verbose_name="Nilai")
+
+    def __str__(self):
+        return self.type.name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Biaya Perjalanan Dinas"

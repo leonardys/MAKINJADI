@@ -8,7 +8,14 @@ from .models import (
     ExpenseDocumentLog,
     Unit,
     Employee,
+    ExpenseType,
+    Expense,
 )
+
+
+class ExpenseInline(admin.TabularInline):
+    model = Expense
+    extra = 1
 
 
 class WorkDayInline(admin.TabularInline):
@@ -65,7 +72,7 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         "last_update",
     ]
     ordering = ["-date"]
-    inlines = [ExpenseDocumentLogInline]
+    inlines = [ExpenseDocumentLogInline, ExpenseInline]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -107,6 +114,11 @@ class UnitAdmin(admin.ModelAdmin):
     ordering = ["full_name"]
 
 
+class ExpenseTypeAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        return False
+
+
 admin.site.site_header = "MAKINJADI"
 admin.site.site_title = "Manajemen Keuangan dan Informasi Perjalanan Dinas (MAKINJADI)"
 
@@ -114,3 +126,4 @@ admin.site.register(ExpenseDocument, ExpenseDocumentAdmin)
 admin.site.register(WorkOrder, WorkOrderAdmin)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Employee, EmployeeAdmin)
+admin.site.register(ExpenseType, ExpenseTypeAdmin)
