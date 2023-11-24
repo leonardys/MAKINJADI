@@ -10,15 +10,17 @@
 </head>
 
 <body class="space-y-4">
-    <header class="navbar bg-neutral text-neutral-content">
+    <div class="navbar bg-neutral text-neutral-content">
         <nav class="container flex items-center mx-auto justify-between">
             <div class="flex items-center gap-4">
                 <h1 class="btn no-animation text-xl"><a href="{% url 'index' %}">MAKINJADI</a></h1>
                 <span>Manajemen Keuangan dan Informasi Perjalanan Dinas</span>
             </div>
-            <a href="{% url 'admin:index' %}" class="btn btn-primary">Admin</a>
+            <div class="flex items-center">
+                <a href="{% url 'admin:index' %}" class="btn btn-sm btn-ghost hover:btn-primary">Admin</a>
+            </div>
         </nav>
-    </header>
+    </div>
 
     {% block content %}
     {% endblock %}

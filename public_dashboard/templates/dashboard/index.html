@@ -26,7 +26,7 @@
                 <td>{{ doc.range_of_work_days }}</td>
                 <td>{{ doc.last_status }}</td>
                 <td>{{ doc.last_update }}</td>
-                <td><a href="{% url 'detail' doc.id %}" class="btn btn-xs btn-primary">Detil</a></td>
+                <td><a href="{% url 'detail' doc.id %}" class="btn btn-xs btn-ghost hover:btn-primary">Detil</a></td>
             </tr>
             {% endfor %}
             {% else %}
