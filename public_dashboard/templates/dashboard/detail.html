@@ -25,16 +25,41 @@
 </div>
 <div class="divider"></div>
 <div class="overflow-x-auto container mx-auto">
-    {% for log in expense_document.logs.all %}
-    <div class="alert mb-4">
-        <div>
-            <h3 class="font-bold">{{ log.get_status }}</h3>
-            <div class="text-xs">{{ log.created_at }}</div>
-            {% if log.note %}
-            <p class="mt-4">{{ log.note }}</p>
+    <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+        <li>
+            <div class="timeline-middle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="timeline-start md:text-end mb-10">
+                <time>{{ expense_document.date }}</time>
+                <div class="text-lg font-black">Menunggu Berkas</div>
+            </div>
+            <hr />
+        </li>
+        {% for log in expense_document.logs.all %}
+        <li>
+            <hr />
+            <div class="timeline-middle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
+                    <path fill-rule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="timeline-start md:text-end mb-10">
+                <time>{{ log.created_at }}</time>
+                <div class="text-lg font-black">{{ log.get_status }}</div>
+                {% if log.note %}{{ log.note }}{% endif %}
+            </div>
+            {% if log.status != "DONE" %}
+            <hr />
             {% endif %}
-        </div>
-    </div>
-    {% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
