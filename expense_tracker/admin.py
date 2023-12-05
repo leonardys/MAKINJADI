@@ -10,6 +10,7 @@ from .models import (
     Employee,
     ExpenseType,
     Expense,
+    PaymentBundle,
 )
 
 
@@ -127,3 +128,4 @@ admin.site.register(WorkOrder, WorkOrderAdmin)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(ExpenseType, ExpenseTypeAdmin)
+admin.site.register(PaymentBundle)

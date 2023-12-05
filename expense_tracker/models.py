@@ -66,6 +66,16 @@ class WorkDay(models.Model):
         verbose_name_plural = verbose_name = "Waktu Pelaksanaan Tugas"
 
 
+class PaymentBundle(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nama Bundel")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = verbose_name = "Bundel"
+
+
 class ExpenseDocument(models.Model):
     work_order = models.ForeignKey(
         WorkOrder, on_delete=models.CASCADE, verbose_name="Nomor ST"
@@ -76,6 +86,13 @@ class ExpenseDocument(models.Model):
     work_days = models.ManyToManyField(WorkDay, verbose_name="Waktu Pelaksanaan Tugas")
     number = models.CharField(max_length=30, verbose_name="Nomor SPD")
     date = models.DateField(verbose_name="Tanggal SPD")
+    payment_bundle = models.ForeignKey(
+        PaymentBundle,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name="Bundel",
+    )
 
     def __str__(self):
         return self.number
