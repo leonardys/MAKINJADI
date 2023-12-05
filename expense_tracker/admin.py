@@ -111,11 +111,15 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 class UnitAdmin(admin.ModelAdmin):
-    list_display = ["full_name", "short_name"]
     ordering = ["full_name"]
+
+    def has_module_permission(self, request):
+        return False
 
 
 class ExpenseTypeAdmin(admin.ModelAdmin):
+    ordering = ["name"]
+
     def has_module_permission(self, request):
         return False
 
