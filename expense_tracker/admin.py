@@ -69,6 +69,7 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         "date",
         "employee",
         "range_of_work_days",
+        "total_expense",
         "last_status",
         "last_update",
     ]
@@ -124,6 +125,10 @@ class ExpenseTypeAdmin(admin.ModelAdmin):
         return False
 
 
+class PaymentBundleAdmin(admin.ModelAdmin):
+    list_display = ["name", "document_count"]
+
+
 admin.site.site_header = "MAKINJADI"
 admin.site.site_title = "Manajemen Keuangan dan Informasi Perjalanan Dinas (MAKINJADI)"
 
@@ -132,4 +137,4 @@ admin.site.register(WorkOrder, WorkOrderAdmin)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(ExpenseType, ExpenseTypeAdmin)
-admin.site.register(PaymentBundle)
+admin.site.register(PaymentBundle, PaymentBundleAdmin)

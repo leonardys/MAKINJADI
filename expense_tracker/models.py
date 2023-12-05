@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from django.contrib.auth.models import User
 
 
@@ -72,8 +73,13 @@ class PaymentBundle(models.Model):
     def __str__(self):
         return self.name
 
+    def document_count(self):
+        return self.documents.count()
+
     class Meta:
         verbose_name_plural = verbose_name = "Bundel"
+
+    document_count.short_description = "Jumlah SPD"
 
 
 class ExpenseDocument(models.Model):
@@ -92,6 +98,7 @@ class ExpenseDocument(models.Model):
         blank=True,
         null=True,
         verbose_name="Bundel",
+        related_name="documents",
     )
 
     def __str__(self):
@@ -120,11 +127,14 @@ class ExpenseDocument(models.Model):
             )
         return ""
 
+    def total_expense(self):
+        return self.expenses.aggregate(total=Sum("amount"))["total"]
+
     class Meta:
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
 
     range_of_work_days.short_description = "Waktu Pelaksanaan"
-    last_status.short_description = "Status Terakhir"
+    last_status.short_description = "Status"
     last_update.short_description = "Tanggal Update"
 
 
@@ -172,7 +182,9 @@ class ExpenseType(models.Model):
 
 
 class Expense(models.Model):
-    expense_document = models.ForeignKey(ExpenseDocument, on_delete=models.CASCADE)
+    expense_document = models.ForeignKey(
+        ExpenseDocument, on_delete=models.CASCADE, related_name="expenses"
+    )
     type = models.ForeignKey(
         ExpenseType,
         on_delete=models.CASCADE,
