@@ -63,7 +63,7 @@ class WorkOrderAdmin(admin.ModelAdmin):
 
 
 class ExpenseDocumentAdmin(admin.ModelAdmin):
-    fields = ("work_order", "number", "date", "employee", "work_days")
+    fields = ("work_order", "number", "date", "employee", "work_days", "payment_bundle")
     list_display = [
         "number",
         "date",
