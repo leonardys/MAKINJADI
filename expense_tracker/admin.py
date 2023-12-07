@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db import models
 from django import forms
 from .models import (
@@ -126,6 +126,21 @@ class ExpenseTypeAdmin(admin.ModelAdmin):
 
 class PaymentBundleAdmin(admin.ModelAdmin):
     list_display = ["name", "document_count", "total_expense"]
+    actions = ["set_as_ready_for_payment"]
+
+    def set_as_ready_for_payment(self, request, queryset):
+        for bundle in queryset:
+            for doc in bundle.documents.all():
+                log = ExpenseDocumentLog.objects.create(
+                    status=ExpenseDocumentLog.Status.READY_FOR_PAYMENT,
+                    expense_document=doc,
+                    user=request.user,
+                )
+        self.message_user(
+            request, "Bundel telah ditandai siap dibayar", messages.SUCCESS
+        )
+
+    set_as_ready_for_payment.short_description = "Tandai siap dibayar"
 
 
 admin.site.site_header = "MAKINJADI"
