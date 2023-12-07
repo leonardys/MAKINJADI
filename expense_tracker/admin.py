@@ -68,7 +68,6 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         "number",
         "date",
         "employee",
-        "range_of_work_days",
         "total_expense",
         "last_status",
         "last_update",
@@ -126,7 +125,7 @@ class ExpenseTypeAdmin(admin.ModelAdmin):
 
 
 class PaymentBundleAdmin(admin.ModelAdmin):
-    list_display = ["name", "document_count"]
+    list_display = ["name", "document_count", "total_expense"]
 
 
 admin.site.site_header = "MAKINJADI"

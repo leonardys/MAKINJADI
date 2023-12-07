@@ -76,9 +76,13 @@ class PaymentBundle(models.Model):
     def document_count(self):
         return self.documents.count()
 
+    def total_expense(self):
+        return self.documents.aggregate(total=Sum("expenses__amount"))["total"]
+
     class Meta:
         verbose_name_plural = verbose_name = "Bundel"
 
+    total_expense.short_description = "Jumlah Biaya"
     document_count.short_description = "Jumlah SPD"
 
 
@@ -104,17 +108,6 @@ class ExpenseDocument(models.Model):
     def __str__(self):
         return self.number
 
-    def range_of_work_days(self):
-        if self.work_days.count() > 1:
-            return "{} s.d. {}".format(
-                self.work_days.order_by("date")[0].date.strftime("%Y-%m-%d"),
-                self.work_days.order_by("-date")[0].date.strftime("%Y-%m-%d"),
-            )
-        elif self.work_days.count() == 1:
-            return "{}".format(self.work_days.order_by("date")[0].date)
-        else:
-            return "Waktu Pelaksanaan Belum Diatur"
-
     def last_status(self):
         if self.logs.count():
             return self.logs.order_by("-created_at")[0].status_label()
@@ -122,9 +115,7 @@ class ExpenseDocument(models.Model):
 
     def last_update(self):
         if self.logs.count():
-            return self.logs.order_by("-created_at")[0].created_at.strftime(
-                "%Y-%m-%d %H:%S"
-            )
+            return self.logs.order_by("-created_at")[0].created_at
         return ""
 
     def total_expense(self):
@@ -133,9 +124,9 @@ class ExpenseDocument(models.Model):
     class Meta:
         verbose_name_plural = verbose_name = "Surat Perjalanan Dinas (SPD)"
 
-    range_of_work_days.short_description = "Waktu Pelaksanaan"
     last_status.short_description = "Status"
     last_update.short_description = "Tanggal Update"
+    total_expense.short_description = "Jumlah Biaya"
 
 
 class ExpenseDocumentLog(models.Model):
