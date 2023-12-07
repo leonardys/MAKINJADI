@@ -117,7 +117,7 @@ class ExpenseDocument(models.Model):
 
     def last_status(self):
         if self.logs.count():
-            return self.logs.order_by("-created_at")[0].get_status()
+            return self.logs.order_by("-created_at")[0].status_label()
         return "Menunggu Berkas"
 
     def last_update(self):
@@ -164,7 +164,7 @@ class ExpenseDocumentLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def get_status(self):
+    def status_label(self):
         return self.Status(self.status).label
 
     class Meta:

@@ -52,7 +52,7 @@
                 </svg>
             </div>
             <div class="timeline-end timeline-box">
-                <div class="font-black">{{ log.get_status }}</div>
+                <div class="font-black">{{ log.status_label }}</div>
                 {% if log.note %}{{ log.note }}{% endif %}
             </div>
             {% if log.status != "DONE" %}
