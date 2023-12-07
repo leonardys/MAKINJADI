@@ -110,12 +110,12 @@ class ExpenseDocument(models.Model):
 
     def last_status(self):
         if self.logs.count():
-            return self.logs.order_by("-created_at")[0].status_label()
+            return self.logs.latest("created_at").status_label()
         return "Menunggu Berkas"
 
     def last_update(self):
         if self.logs.count():
-            return self.logs.order_by("-created_at")[0].created_at
+            return self.logs.latest("created_at").created_at
         return ""
 
     def total_expense(self):
