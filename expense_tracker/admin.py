@@ -1,6 +1,8 @@
 from django.contrib import admin, messages
 from django.db import models
+from django.urls import reverse
 from django import forms
+from django.utils.html import format_html
 from .models import (
     WorkOrder,
     WorkDay,
@@ -125,7 +127,7 @@ class ExpenseTypeAdmin(admin.ModelAdmin):
 
 
 class PaymentBundleAdmin(admin.ModelAdmin):
-    list_display = ["name", "document_count", "total_expense"]
+    list_display = ["name", "list_of_documents", "total_expense"]
     actions = ["set_as_ready_for_payment"]
 
     def set_as_ready_for_payment(self, request, queryset):
@@ -140,6 +142,16 @@ class PaymentBundleAdmin(admin.ModelAdmin):
             request, "Bundel telah ditandai siap dibayar", messages.SUCCESS
         )
 
+    def list_of_documents(self, obj):
+        return format_html(
+            '<a href="{}?payment_bundle__id__exact={}">{}</a>',
+            reverse("admin:expense_tracker_expensedocument_changelist"),
+            obj.pk,
+            obj.document_count(),
+        )
+
+    list_of_documents.allow_tags = True
+    list_of_documents.short_description = "Jumlah SPD"
     set_as_ready_for_payment.short_description = "Tandai siap dibayar"
 
 
