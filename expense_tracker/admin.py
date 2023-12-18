@@ -75,6 +75,7 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
         "last_update",
     ]
     ordering = ["-date"]
+    actions = ["set_as_paid"]
     inlines = [ExpenseDocumentLogInline, ExpenseInline]
 
     def get_form(self, request, obj=None, **kwargs):
@@ -103,8 +104,19 @@ class ExpenseDocumentAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 
+    def set_as_paid(self, request, queryset):
+        for doc in queryset:
+            log = ExpenseDocumentLog.objects.create(
+                status=ExpenseDocumentLog.Status.DONE,
+                expense_document=doc,
+                user=request.user,
+            )
+        self.message_user(request, "SPD telah dibayar", messages.SUCCESS)
+
     class Media:
         css = {"all": ["expense_tracker/hide.css"]}
+
+    set_as_paid.short_description = "Tandai sudah dibayar"
 
 
 class EmployeeAdmin(admin.ModelAdmin):
